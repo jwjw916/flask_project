@@ -15,8 +15,8 @@ def create_app():
     migrate.init_app(app, db)
 
 
-    from .views import basic_views, jiwoo_views
+    from .views import basic_views
     app.register_blueprint(basic_views.fisa) 
-    app.register_blueprint(jiwoo_views.jiwoo)
+
 
     return app

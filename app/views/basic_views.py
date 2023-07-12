@@ -42,3 +42,7 @@ def loop():
 def about_me():
     return render_template('about_me.html')
 
+
+@fisa.route('/')
+def index():
+    return render_template('index.html')

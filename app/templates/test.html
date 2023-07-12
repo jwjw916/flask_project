@@ -9,6 +9,10 @@
     {% for item in list %}
     <p>순서: {{ loop.index }} </p>
     <p>{{ item }}</p>
+    {% if loop.last %}
+    <p>종료</p>
+    {% endif %}
 {% endfor %}
+
 </body>
 </html>

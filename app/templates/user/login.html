@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+    <div id="container" class="col-8">
+        <h5 class="my-3 border-bottom pb-2">로그인</h5>
+        <form class="my-3" action="{{ url_for('user.log_in') }}" method="post">
+
+            
+            {{ form.csrf_token }} {# CSRF 공격을 막기 위해 서버와 토큰을 확인 #}
+            {% include 'form_errors.html' %}
+
+            {{ form.username.label }} {{ form.username(class="form-control") }}
+            <p>{{ form.password.label }} {{ form.password(class="form-control") }}</p>
+            <p><input type="submit" class="btn btn-outline-dark"  value="로그인"></p>
+           
+
+
+</div>
+</center>
+{% endblock %}

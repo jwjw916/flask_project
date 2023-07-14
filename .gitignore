@@ -27,3 +27,10 @@ __pycache__/
 
 # 데이터베이스 관련 파일
 migrations/
+
+# 기타파일
+2_app/
+1_app.py
+
+# 비밀번호 관련 설정
+config.py

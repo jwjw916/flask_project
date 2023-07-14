@@ -1,19 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    question 이라는 객체에 값이 있다면
-    {% if question %}
-    글번호: {{ question.id }}
-    글제목: {{ question.subject }}
-    글내용: {{ question.content }}
-    글작성일: {{ question.create_date }}
-    {% endif %}
+{% extends 'base.html' %}
+{% block content %}
 
-    endif 바깥의 문장입니다.
-</body>
-</html>
+<center>
+    <div id="container" class="col-8">
+        <!-- 질문 -->
+        <p><h2 class="border-bottom py-2">{{ question.subject }}</h2></p>
+        <div class="card my-3">
+            <div class="card-body">
+                <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
+                <div class="d-flex justify-content-end">
+                    <div class="badge bg-light text-dark p-2">
+                        작성일시: {{ question.create_date | datetime2 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 답변에 관한 코드 -->
+        <form action="{{ url_for('ans.create', question_id=question.id) }}" method="post" class="my-3">
+            {{ form.csrf_token }}
+            <div class="mb-3">
+                <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+            </div>
+           <p><input type="submit" value="답변완료" class="btn btn-primary"> </p>
+        </form>
+
+<p>
+        <h5 class="border-bottom my-3 py-2">{{ question.answer_set|length }}개의 답변이 있습니다.</h5>
+    </p>
+        {% for ans in question.answer_set %}
+        <div class="card my-3">
+            <div class="card-body">
+                <div class="card-text" style="white-space: pre-line;">{{ ans.content }}</div>
+                <div class="d-flex justify-content-end">
+                    <div class="badge bg-light text-dark p-2">
+                        작성일시: {{ ans.create_date | datetime2 }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+    </div>
+</center>
+{% endblock %}

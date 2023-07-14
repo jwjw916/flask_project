@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+    <div id="container" class="col-8">
+        <h5 class="my-3 border-bottom pb-2">회원 가입</h5>
+        <form class="my-3" action="{{ url_for('user.sign_up') }}" method="post">
+
+            
+            {{ form.csrf_token }} {# CSRF 공격을 막기 위해 서버와 토큰을 확인 #}
+            {% include 'form_errors.html' %}
+            {# Form에서 작성한 라벨 #}
+            {{ form.username.label }} {{ form.username(class="form-control") }}
+
+        {# Form에서 작성한 필드. 값을 입력 받아야 하는 '폼'이므로 호출연산자로 작성 #}        
+            <p>{{ form.password1.label }} {{ form.password1(class="form-control") }}</p>
+            <p>{{ form.password2.label }} {{ form.password2(class="form-control") }}</p>
+            <p>{{ form.email.label }} {{ form.email(class="form-control") }}</p>
+            <p><input type="submit" class="btn btn-outline-dark"  value="회원가입"></p>
+
+            <p><a href="/" class="btn btn-primary">홈으로</a></p>
+        </form>
+    </div>
+</center>
+{% endblock %}

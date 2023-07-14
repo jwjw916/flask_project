@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<!-- 질문 등록 -->
+<center>
+    <div id="container" class="col-8">
+        <h5 class="my-3 border-bottom pb-2">질문 올리기</h5>
+        <form class="my-3" action="{{ url_for('question.create') }}" method="post">
+
+            
+            {{ form.csrf_token }} {# CSRF 공격을 막기 위해 서버와 토큰을 확인 #}
+
+            {% include 'form_errors.html' %}
+   
+
+        {# Form에서 작성한 라벨 #}
+            {{ form.subject.label }} {{ form.subject(class="form-control") }}
+
+        {# Form에서 작성한 필드. 값을 입력 받아야 하는 '폼'이므로 호출연산자로 작성 #}        
+            <p>{{ form.content.label }} {{ form.content(class="form-control") }}</p>
+            <p><input type="submit" class="btn btn-outline-dark"  value="Go"></p>
+        </form>
+    </div>
+</center>
+{% endblock %}

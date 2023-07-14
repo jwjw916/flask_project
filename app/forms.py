@@ -21,5 +21,5 @@ class UserForm(FlaskForm):
     email = EmailField('이메일', validators=[DataRequired(), Email()])
 
 class LoginForm(FlaskForm):
-    username = StringField('사용자이름', validators=[DataRequired(), Length(min=3, max=25)])
-    password = PasswordField('비밀번호확인', validators=[DataRequired()])
+    username = StringField('사용자이름', validators=[DataRequired(), Length(min=3, max=10)])
+    password = PasswordField('비밀번호확인', validators=[DataRequired(),  Length(min=4, max=10)])

@@ -3,19 +3,29 @@
 
 <center>
     <div id="container" class="col-8">
+
         <!-- 질문 -->
         <p><h2 class="border-bottom py-2">{{ question.subject }}</h2></p>
         <div class="card my-3">
             <div class="card-body">
                 <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
                 <div class="d-flex justify-content-end">
-                    <div class="badge bg-light text-dark p-2">
+                    <div class="badge bg-black text-white p-2">
                         작성일시: {{ question.create_date | datetime2 }}
+                    </div>
+                    <div class="badge bg-light text-dark p-2">
+                        작성자: {{ question.user_id }}
                     </div>
                 </div>
             </div>
         </div>
-        
+        {% if question.user == g.user %}
+        <a href="{{ url_for('question.create') }}" class="btn btn-outline-dark btn-sm">질문 수정</a>
+        <a href="{{ url_for('question.create') }}" class="btn btn-outline-dark btn-sm">질문 삭제</a> 
+        {% endif %}
+    
+        {% if g.user %}
+
         <!-- 답변에 관한 코드 -->
         <form action="{{ url_for('ans.create', question_id=question.id) }}" method="post" class="my-3">
             {{ form.csrf_token }}
@@ -24,6 +34,11 @@
             </div>
            <p><input type="submit" value="답변완료" class="btn btn-primary"> </p>
         </form>
+        {% if question.user == g.user %}
+        <a href="{{ url_for('ans.create', question_id=question.id) }}" class="btn btn-outline-dark btn-sm">답변 수정</a>
+        <a href="{{ url_for('ans.create', question_id=question.id) }}" class="btn btn-outline-dark btn-sm">답변 삭제</a> 
+        {% endif %}
+        {% endif %}
 
 <p>
         <h5 class="border-bottom my-3 py-2">{{ question.answer_set|length }}개의 답변이 있습니다.</h5>
@@ -33,8 +48,11 @@
             <div class="card-body">
                 <div class="card-text" style="white-space: pre-line;">{{ ans.content }}</div>
                 <div class="d-flex justify-content-end">
-                    <div class="badge bg-light text-dark p-2">
+                    <div class="badge bg-black text-white p-2">
                         작성일시: {{ ans.create_date | datetime2 }}
+                    </div>
+                    <div class="badge bg-light text-dark p-2">
+                        작성자: {{ ans.user_id }}
                     </div>
                 </div>
             </div>

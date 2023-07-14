@@ -2,7 +2,7 @@
 from app.models import Question, Answer
 from app.forms import QuestionForm, AnswerForm
 from datetime import datetime
-from flask import Blueprint, render_template, request, url_for, redirect
+from flask import Blueprint, render_template, request, url_for, redirect, g
 # from werkzeug.utils import redirect
 
 from app import db
@@ -20,7 +20,7 @@ def create(question_id):
 
     if form.validate_on_submit():
         # 어느 글에서 오는지 (question_id)
-        a = Answer(content=form.content.data, create_date=datetime.now())
+        a = Answer(content=form.content.data, create_date=datetime.now(),  user=g.user)
 
         # answer의 question_id 필드에 추가
         question.answer_set.append(a)
@@ -28,6 +28,6 @@ def create(question_id):
         db.session.commit()
         # question으로 불리우는 basic_views.py의 detail 함수를 호출하는데 question_id를 함께 전달
         return redirect(url_for('question.detail', question_id=question_id))
-    return render_template('question/question_detail.html',question=question, form=form)
+    return render_template('question/question_detail.html',question=question, form=form, user=g.user)
 
 

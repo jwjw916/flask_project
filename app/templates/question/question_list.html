@@ -9,8 +9,9 @@
         <thead>
         <tr class="table-dark">
             <th>번호</th>
-            <th>제목</th>
             <th>작성일시</th>
+            <th>제목</th>
+            <<th>작성자</th>
         </tr>
         </thead>
         <tbody>
@@ -30,10 +31,9 @@
           
             <!-- 최신글이 1번이 되도록 바꿔보기 <td>{{ question_list.total - ((question_list.page-1) * question_list.per_page) - loop.index0 }}</td> -->
             <td>{{ ((question_list.page-1) * question_list.per_page) + loop.index }}</td>
-            <td><a href="{{ url_for('question.detail', question_id=question.id) }}">{{ question.subject }}</a></td>
-
-
             <td>{{ question.create_date | datetime }}</td>
+            <td><a href="{{ url_for('question.detail', question_id=question.id) }}">{{ question.subject }}</a></td>
+            <td>{{ question.user_id }}</td>
         </tr>
         {% endfor %}
         {% else %}
@@ -87,7 +87,9 @@
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
+    {% if g.user %}
     <a href="{{ url_for('question.create') }}" class="btn btn-primary">질문 등록</a>
+    {% endif %}
 </div>
 
 {% endblock %}
